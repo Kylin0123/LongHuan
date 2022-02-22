@@ -1,0 +1,14 @@
+<!--pages/me/me.wxml-->
+<view wx:if="{{login==false}}">
+    <text>请先登录！</text>
+</view>
+<view wx:else>
+    <button type="default">
+        <navigator url="/pages/myJoin/myJoin" hover-class="none">我的报名</navigator>
+    </button>
+    <button type="default">
+        <navigator url="/pages/person/person" hover-class="none">个人信息</navigator>
+    </button>
+    
+    <button type="default" bindtap="onLogout">退出登录</button>
+</view>

@@ -1,0 +1,36 @@
+{
+    "pages": [
+        "pages/home/home",
+        "pages/me/me",
+        "pages/person/person",
+        "pages/join/join",
+        "pages/logs/logs",
+        "pages/myJoin/myJoin"
+    ],
+    "window": {
+        "backgroundTextStyle": "light",
+        "navigationBarBackgroundColor": "#fff",
+        "navigationBarTitleText": "首页",
+        "navigationBarTextStyle": "black"
+    },
+    "style": "v2",
+    "sitemapLocation": "sitemap.json",
+    "tabBar": {
+        "color": "#a9b7b7",
+        "borderStyle": "black",
+        "list": [
+            {
+                "pagePath": "pages/home/home",
+                "text": "主页"
+            },
+            {
+                "pagePath": "pages/join/join",
+                "text": "报名"
+            },
+            {
+                "pagePath": "pages/me/me",
+                "text": "我的"
+            }
+        ]
+    }
+}
