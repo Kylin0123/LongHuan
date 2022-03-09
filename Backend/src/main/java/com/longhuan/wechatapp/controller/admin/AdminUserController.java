@@ -24,8 +24,22 @@ public class AdminUserController {
     @Autowired
     private UserJoinLessonService userJoinLessonService;
 
+    @RequestMapping("/login")
+    public AdminResult login(@RequestParam String username, @RequestParam String password) {
+        if (username.equals("admin") && password.equals("111111")) {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("token", "admin-token");
+            AdminResult adminResult = new AdminResult(jsonObject);
+            adminResult.setCode(20000);
+            return adminResult;
+        }
+        else {
+            return new AdminResult(0, "错误的管理员账号或密码！");
+        }
+    }
+
     @RequestMapping("/getUserAll")
-    public AdminResult adminLessons() {
+    public AdminResult adminUsers() {
         List<User> users = userService.list();
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("users", users);
@@ -35,7 +49,7 @@ public class AdminUserController {
     }
 
     @RequestMapping(path = "/saveOrUpdateUser", method = RequestMethod.POST, consumes = "application/json")
-    public AdminResult addLesson(@RequestBody User user) {
+    public AdminResult addUser(@RequestBody User user) {
         userService.saveOrUpdate(user);
         AdminResult adminResult = new AdminResult(20000, "数据修改成功！");
         return adminResult;

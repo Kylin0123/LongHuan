@@ -1,9 +1,9 @@
 package com.longhuan.wechatapp.controller;
 
+import com.longhuan.wechatapp.result.AdminResult;
 import com.longhuan.wechatapp.result.WechatResult;
 import com.longhuan.wechatapp.entity.User;
 import com.longhuan.wechatapp.service.UserService;
-import javafx.util.Pair;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -38,11 +38,11 @@ public class UserController {
     public String secret;
 
     @RequestMapping("login")
-    public WechatResult login(@RequestParam(name = "code") String code) {
+    public WechatResult login(@RequestParam String code) {
         try {
-            Pair<String, String> res = getOpenid(code);
-            String openid = res.getKey();
-            String session_key = res.getValue();
+            String[] res = getOpenid(code);
+            String openid = res[0];
+            String session_key = res[1];
             int _3rd_session = (openid + session_key).hashCode();
 
             // 检查数据库中是否有该openid的用户
@@ -66,7 +66,7 @@ public class UserController {
         return new WechatResult();
     }
 
-    private Pair<String, String> getOpenid(String code) throws Exception {
+    private String[] getOpenid(String code) throws Exception {
         System.out.println("code:" + code);
         String url = "https://api.weixin.qq.com/sns/jscode2session";
         url += "?appid=" + appid;//自己的appid
@@ -104,7 +104,26 @@ public class UserController {
         JSONObject jo = JSON.parseObject(res);
         String openid = jo.getString("openid");
         String session_key = jo.getString("session_key");
-        return new Pair<String, String>(openid, session_key);
+        String[] result = new String[2];
+        result[0] = openid;
+        result[1] = session_key;
+        return result;
+    }
+
+    @RequestMapping(path = "user", method = RequestMethod.GET)
+    public WechatResult user(@RequestParam String openid) {
+        User user = userService.getById(openid);
+
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("user", user);
+        return new WechatResult(jsonObject);
+    }
+
+    @RequestMapping(path = "/user", method = RequestMethod.POST, consumes = "application/json")
+    public WechatResult addUser(@RequestBody User user) {
+        userService.saveOrUpdate(user);
+        WechatResult result = new WechatResult(1, "用户信息更新成功！");
+        return result;
     }
 
 }

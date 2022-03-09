@@ -2,9 +2,7 @@
  * 请求相关的封装
  */
 
-import {TEST_BACKEND_URL} from '../common';
-
-const baseUrl = TEST_BACKEND_URL; // 接口地址
+const baseUrl = "https://longhuangroup.top/longhuan-api/v1/"; // 接口地址
 
 /**
  * 封装请求

@@ -24,7 +24,7 @@ module.exports = {
    * In most cases please use '/' !!!
    * Detail: https://cli.vuejs.org/config/#publicpath
    */
-  publicPath: '/',
+  publicPath: './',
   outputDir: 'dist',
   assetsDir: 'static',
   lintOnSave: process.env.NODE_ENV === 'development',
@@ -39,15 +39,17 @@ module.exports = {
     proxy: {
       // change xxx-api/login => mock/login
       // detail: https://cli.vuejs.org/config/#devserver-proxy
-      [process.env.VUE_APP_BASE_API+'/vue-admin-template/user/login']: {
+      /*
+      [process.env.VUE_APP_BASE_API+'/vue-admin-template/']: {
         target: `http://127.0.0.1:${port}/dev-api`,
         changeOrigin: true,
         pathRewrite: {
           ['^' + process.env.VUE_APP_BASE_API]: ''
         }
       },
+      */
       [process.env.VUE_APP_BASE_API]: {
-        target: `http://127.0.0.1:8080/admin`,
+        target: `https://longhuangroup.top/longhuan-api/v1/admin`,
         changeOrigin: true,
         pathRewrite: {
           ['^' + process.env.VUE_APP_BASE_API]: ''

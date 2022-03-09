@@ -1,6 +1,7 @@
 <!--pages/me/me.wxml-->
 <view wx:if="{{login==false}}">
     <text>请先登录！</text>
+    <button type="primary" bindtap="onLogin">登录账号</button>
 </view>
 <view wx:else>
     <button type="default">

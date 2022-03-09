@@ -16,7 +16,7 @@ spring:
 
 mybatis:
   mapper-locations: classpath:mapping/*Mapping.xml
-  type-aliases-package: com.example.entity
+  type-aliases-package: com.longhuan.wechatapp.entity
 
 wechat:
   appid: wxe022b5baf52ae923

@@ -1,4 +1,6 @@
 // pages/me/me.js
+let api = require('../../utils/api');
+
 Page({
 
     /**
@@ -8,9 +10,18 @@ Page({
         login: false
     },
 
+    onLogin: function() {
+        api.login().then((res) => {
+            this.setData({
+                login: getApp().globalData.login,
+                openid: res.data.openid
+            })
+        });
+    },
+
     onLogout: function () {
         getApp().globalData.login = false;
-        wx.switchTab({
+        wx.reLaunch({
             url: '/pages/home/home'
         })
     },

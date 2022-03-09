@@ -3,7 +3,7 @@ CREATE DATABASE IF NOT EXISTS longhuan;
 USE longhuan;
 SHOW DATABASES;
 
-DROP TABLE `user`;
+DROP TABLE IF EXISTS `user`;
 
 CREATE TABLE `user` (
   `openid` varchar(32) NOT NULL,		  	/* 用户openid */
@@ -24,7 +24,7 @@ VALUES ('1', '管理员1', 100, true, '12345678901', "wx_id_0001", "12345678@sam
 ('2', '管理员2', 100, true, '12345678902', "wx_id_0002", "12345678@sample.com", "我是管理员2"),
 ('3', '管理员3', 100, true, '12345678903', "wx_id_0003", "12345678@sample.com", "我是管理员3");
 
-DROP TABLE `lesson`;
+DROP TABLE IF EXISTS `lesson`;
 
 CREATE TABLE `lesson` (
   `id` int NOT NULL AUTO_INCREMENT,  	/* 课程id */
@@ -48,7 +48,7 @@ VALUES (1,'咖啡培训1', 100, 100, '免费', '咖啡培训的介绍和描述�
 
 SELECT * FROM user;
 
-DROP TABLE `user_join_lesson`;
+DROP TABLE IF EXISTS `user_join_lesson`;
 
 CREATE TABLE `user_join_lesson` (
     `user_openid` varchar(32) REFERENCES `user`(openid),

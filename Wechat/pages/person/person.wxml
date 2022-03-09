@@ -1,23 +1,41 @@
 <!--index.wxml-->
-<view class="container">
-  <view class="userinfo">
-    <block wx:if="{{canIUseOpenData}}">
-      <view class="userinfo-avatar" bindtap="bindViewTap">
-        <open-data type="userAvatarUrl"></open-data>
-      </view>
-      <open-data type="userNickName"></open-data>
-    </block>
-    <block wx:elif="{{!hasUserInfo}}">
-      <button wx:if="{{canIUseGetUserProfile}}" bindtap="getUserProfile"> 获取头像昵称 </button>
-      <button wx:elif="{{canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
-      <view wx:else> 请使用1.4.4及以上版本基础库 </view>
-    </block>
-    <block wx:else>
-      <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
-      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
-    </block>
-  </view>
-  <view class="usermotto">
-    <text class="user-motto">{{motto}}</text>
-  </view>
+<view class="userinfo">
+  <block wx:if="{{canIUseOpenData}}">
+    <view class="userinfo-avatar" bindtap="bindViewTap">
+      <open-data type="userAvatarUrl"></open-data>
+    </view>
+    <open-data type="userNickName"></open-data>
+  </block>
+  <block wx:elif="{{!hasUserInfo}}">
+    <button wx:if="{{canIUseGetUserProfile}}" bindtap="getUserProfile"> 获取头像昵称 </button>
+    <button wx:elif="{{canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
+    <view wx:else> 请使用1.4.4及以上版本基础库 </view>
+  </block>
+  <block wx:else>
+    <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
+    <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+  </block>
+</view>
+<view style="white-space:pre-wrap">
+  <form bindsubmit="formSubmit" bindreset="formReset">
+    <text>openid:{{openid}}\n</text>
+    <text>姓名：{{username}}\n</text>
+    <input name="username" placeholder="请在这里输入修改" />
+    <text>年龄：{{age}}\n</text>
+    <input name="age" placeholder="请在这里输入修改" />
+    <text>性别：{{gender}}\n</text>
+    <input name="gender" placeholder="请在这里输入修改" />
+    <text>电话：{{phone}}\n</text>
+    <input name="phone" placeholder="请在这里输入修改" />
+    <text>微信号：{{wxId}}\n</text>
+    <input name="wxId" placeholder="请在这里输入修改" />
+    <text>邮箱：{{email}}\n</text>
+    <input name="email" placeholder="请在这里输入修改" />
+    <text>个人介绍：{{personalInfo}}\n</text>
+    <input name="personalInfo" placeholder="请在这里输入修改" />
+
+    <button formType="submit">提交</button>
+    <button formType="reset">重置</button>
+
+  </form>
 </view>
