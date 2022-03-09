@@ -4,12 +4,11 @@
     <button type="primary" bindtap="onLogin">登录账号</button>
 </view>
 <view wx:else>
-    <button type="default">
-        <navigator url="/pages/myJoin/myJoin" hover-class="none">我的报名</navigator>
-    </button>
-    <button type="default">
-        <navigator url="/pages/person/person" hover-class="none">个人信息</navigator>
-    </button>
-    
-    <button type="default" bindtap="onLogout">退出登录</button>
+    <van-cell-group inset>
+        <van-cell is-link title="我的报名" link-type="navigateTo" url="/pages/myJoin/myJoin" />
+        <van-cell is-link title="个人信息" link-type="navigateTo" url="/pages/person/person" />
+    </van-cell-group>
+    <van-cell-group inset>
+        <button type="warn" bindtap="onLogout">退出登录</button>
+    </van-cell-group>
 </view>

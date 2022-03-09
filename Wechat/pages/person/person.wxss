@@ -17,3 +17,11 @@
 .usermotto {
   margin-top: 200px;
 }
+
+.gray-page {
+  background-color: #f7f8fa;
+}
+
+.font-break {
+  word-break:break-all;
+}
