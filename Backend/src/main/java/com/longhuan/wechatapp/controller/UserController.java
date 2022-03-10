@@ -23,7 +23,7 @@ import java.util.List;
 @RestController
 public class UserController {
 
-    @RequestMapping("/hello")
+    @RequestMapping(path = "/hello", method = RequestMethod.GET)
     public String hello() {
         return "hello";
     }
@@ -37,7 +37,7 @@ public class UserController {
     @Value("${wechat.secret}")
     public String secret;
 
-    @RequestMapping("login")
+    @RequestMapping(path = "login", method = RequestMethod.GET)
     public WechatResult login(@RequestParam String code) {
         try {
             String[] res = getOpenid(code);

@@ -12,7 +12,7 @@ public class User {
 
     private Integer age;
 
-    private Boolean gender;
+    private String gender;
 
     private String phone;
 

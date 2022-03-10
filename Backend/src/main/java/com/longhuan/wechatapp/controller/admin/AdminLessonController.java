@@ -16,7 +16,7 @@ public class AdminLessonController {
     @Autowired
     private LessonService lessonService;
 
-    @RequestMapping("/getLessonAll")
+    @RequestMapping(path = "/getLessonAll", method = RequestMethod.GET)
     public AdminResult adminLessons() {
         List<Lesson> lessons = lessonService.list();
         JSONObject jsonObject = new JSONObject();
@@ -33,7 +33,7 @@ public class AdminLessonController {
         return adminResult;
     }
 
-    @RequestMapping(path = "/deleteLesson")
+    @RequestMapping(path = "/deleteLesson", method = RequestMethod.POST)
     public AdminResult deleteLesson(@RequestParam int id) {
         Lesson lesson = new Lesson();
         lesson.setId(id);

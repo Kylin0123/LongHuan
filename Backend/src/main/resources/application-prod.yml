@@ -19,5 +19,5 @@ mybatis:
   type-aliases-package: com.longhuan.wechatapp.entity
 
 wechat:
-  appid: wxe022b5baf52ae923
-  secret: 67596e7ba8e837c29176f130490b752c
+  appid: wx8f7b161cc2813150
+  secret: 13bcdff47275717fde49e443c4fe436e

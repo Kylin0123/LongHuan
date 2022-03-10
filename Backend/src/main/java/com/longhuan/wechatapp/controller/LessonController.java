@@ -9,6 +9,7 @@ import com.longhuan.wechatapp.service.LessonService;
 import com.longhuan.wechatapp.service.UserJoinLessonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -27,7 +28,7 @@ public class LessonController {
     @Autowired
     UserJoinLessonService userJoinLessonService;
 
-    @RequestMapping("/getLessonAll")
+    @RequestMapping(path = "/getLessonAll", method = RequestMethod.GET)
     public WechatResult getLessonAll() {
         List<Lesson> lessons = lessonService.list();
         JSONObject jsonObject = new JSONObject();
@@ -35,7 +36,7 @@ public class LessonController {
         return new WechatResult(jsonObject);
     }
 
-    @RequestMapping("/joinLesson")
+    @RequestMapping(path = "/joinLesson", method = RequestMethod.POST)
     public WechatResult joinLesson(@RequestParam String openid, @RequestParam int lessonId) {
         UserJoinLesson userJoinLesson = new UserJoinLesson();
         userJoinLesson.setUserOpenid(openid);
@@ -53,7 +54,7 @@ public class LessonController {
         return new WechatResult(1, "报名成功！");
     }
 
-    @RequestMapping(path = "/queryLessonsForUser")
+    @RequestMapping(path = "/queryLessonsForUser", method = RequestMethod.GET)
     public WechatResult queryLessonsForUser(@RequestParam String openid) {
         User user = new User();
         user.setOpenid(openid);
@@ -64,7 +65,7 @@ public class LessonController {
         return result;
     }
 
-    @RequestMapping("/leaveLesson")
+    @RequestMapping(path = "/leaveLesson", method = RequestMethod.POST)
     public WechatResult leaveLesson(@RequestParam String openid, @RequestParam int lessonId) {
         Map<String, Object> params = new HashMap<>();
         params.put("user_openid", openid);

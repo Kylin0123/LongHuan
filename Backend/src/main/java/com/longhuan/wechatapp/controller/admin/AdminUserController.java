@@ -24,7 +24,7 @@ public class AdminUserController {
     @Autowired
     private UserJoinLessonService userJoinLessonService;
 
-    @RequestMapping("/login")
+    @RequestMapping(path = "/login", method = RequestMethod.GET)
     public AdminResult login(@RequestParam String username, @RequestParam String password) {
         if (username.equals("admin") && password.equals("111111")) {
             JSONObject jsonObject = new JSONObject();
@@ -38,7 +38,7 @@ public class AdminUserController {
         }
     }
 
-    @RequestMapping("/getUserAll")
+    @RequestMapping(path = "/getUserAll", method = RequestMethod.GET)
     public AdminResult adminUsers() {
         List<User> users = userService.list();
         JSONObject jsonObject = new JSONObject();
@@ -55,7 +55,7 @@ public class AdminUserController {
         return adminResult;
     }
 
-    @RequestMapping(path = "/deleteUser")
+    @RequestMapping(path = "/deleteUser", method = RequestMethod.POST)
     public AdminResult deleteUser(@RequestParam String openid) {
         User user = new User();
         user.setOpenid(openid);
@@ -65,7 +65,7 @@ public class AdminUserController {
         return adminResult;
     }
 
-    @RequestMapping(path = "/queryLessonForUser")
+    @RequestMapping(path = "/queryLessonForUser", method = RequestMethod.GET)
     public AdminResult queryLessonForUser(@RequestParam String openid) {
         User user = new User();
         user.setOpenid(openid);
