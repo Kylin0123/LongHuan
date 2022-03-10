@@ -92,6 +92,7 @@ Page({
       hasUserInfo: true
     })
   },
+  
   onGenderClick(e) {
     this.setData({
       "showGenderPopup": true

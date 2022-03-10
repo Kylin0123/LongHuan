@@ -1,15 +1,20 @@
 <!--pages/home/home.wxml-->
 <view>
-    <image mode="aspectFill" src="/resources/img/banner.png"></image>
-    <text>欢迎来到龙寰集团</text>
+    <block>
+        <image mode="heightFix" src="/resources/img/banner.png" style="vertical-align:top"></image>
+    </block>
+    <block>
+        <view class="welcome-text">
+            <text>欢迎来到龙寰集团</text>
+        </view>
+    </block>
 </view>
 <view wx:if="{{login==false}}">
     <button type="primary" bindtap="onLogin">登录账号</button>
 </view>
 <view wx:else>
-    <text>uid: {{openid}}</text>
-    <button type="primary">
+    <!-- <text>uid: {{openid}}</text> -->
+    <button type="primary" style="width: 90%; padding-top: 20rpx; padding-bottom: 20rpx; background-color: #1aad19;">
         <navigator open-type="switchTab" url="/pages/join/join">报名课程</navigator>
     </button>
 </view>
-
