@@ -1,14 +1,20 @@
 <!--pages/me/me.wxml-->
-<view wx:if="{{login==false}}">
-    <text>请先登录！</text>
-    <button type="primary" bindtap="onLogin">登录账号</button>
-</view>
-<view wx:else>
-    <van-cell-group inset>
-        <van-cell is-link title="我的报名" link-type="navigateTo" url="/pages/myJoin/myJoin" />
-        <van-cell is-link title="个人信息" link-type="navigateTo" url="/pages/person/person" />
-    </van-cell-group>
-    <van-cell-group inset>
-        <button type="warn" bindtap="onLogout">退出登录</button>
-    </van-cell-group>
+<view>
+    <view wx:if="{{login==false}}">
+        <text>请先登录！</text>
+        <button type="primary" bindtap="onLogin">登录账号</button>
+    </view>
+    <view wx:else>
+        <view style="margin-top: 30rpx;">
+            <van-cell-group inset border="false">
+                <van-cell is-link title="我的报名" link-type="navigateTo" url="/pages/myJoin/myJoin" />
+                <van-cell is-link title="个人信息" link-type="navigateTo" url="/pages/person/person" />
+            </van-cell-group>
+        </view>
+        <view style="margin-top: 20rpx;">
+            <van-cell-group inset border="false">
+                <button type="warn" bindtap="onLogout">退出登录</button>
+            </van-cell-group>
+        </view>
+    </view>
 </view>

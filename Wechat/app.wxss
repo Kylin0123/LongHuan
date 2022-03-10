@@ -12,3 +12,7 @@
 button {
   margin: 10px;
 }
+
+page {
+  background-color: #f7f8fa;
+}

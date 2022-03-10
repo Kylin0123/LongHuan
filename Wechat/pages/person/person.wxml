@@ -1,5 +1,5 @@
 <!--index.wxml-->
-<view class="gray-page">
+<view>
   <view class="userinfo">
     <block wx:if="{{canIUseOpenData}}">
       <view class="userinfo-avatar" bindtap="bindViewTap">
@@ -20,7 +20,7 @@
 
   <view style="margin-top: 30rpx; padding-bottom: 50rpx;">
     <form bindsubmit="formSubmit">
-      <van-cell-group inset>
+      <van-cell-group inset border="false">
         <van-field label="姓名" name="username" value="{{ username }}" placeholder="点击输入姓名" border="{{ true }}" />
         <van-field label="年龄" name="age" value="{{ age }}" placeholder="点击输入年龄" border="{{ true }}" type="number" />
         <van-field label="性别" name="gender" value="{{ gender }}" placeholder="点击选择性别" border="{{ true }}" bind:click-input="onGenderClick" readonly />
@@ -30,7 +30,7 @@
         <van-field label="个人介绍" name="personalInfo" value="{{ personalInfo }}" placeholder="点击输入个人介绍" border="{{ true }}" type="textarea" maxlength="50" show-word-limit autosize />
       </van-cell-group>
       <view style="margin-top: 20rpx">
-        <van-cell-group inset>
+        <van-cell-group inset border="false">
           <button formType="submit" type="primary">更新信息</button>
         </van-cell-group>
       </view>
