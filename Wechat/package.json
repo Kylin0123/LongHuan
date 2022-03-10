@@ -2,6 +2,7 @@
   "requires": true,
   "lockfileVersion": 1,
   "dependencies": {
-    "@vant/weapp": "^1.10.2"
+    "@vant/weapp": "^1.10.2",
+    "@zlyboy/wx-formdata": "^1.0.2"
   }
 }

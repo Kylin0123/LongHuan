@@ -1,6 +1,7 @@
 // index.js
 // 获取应用实例
 
+import Toast from '../../miniprogram_npm/@vant/weapp/toast/toast';
 let api = require('../../utils/api');
 
 Page({
@@ -28,50 +29,19 @@ Page({
       url: '../logs/logs'
     })
   },
-
-  genderNum2Str(num) {
-    if (num === null) {
-      return "";
-    }
-    const STRINGS = ['', '男', '女'];
-    if (num < STRINGS.length) {
-      return STRINGS[num];
-    } else {
-      return '';
-    }
-  },
-  genderStr2Num(str) {
-    let genderNum = 0;
-    switch (str) {
-      case '男': genderNum = 1; break;
-      case '女': genderNum = 2; break;
-      default: genderNum = 0;
-    }
-    return genderNum;
-  },
   validateStr(str) {
     return str === null ? "" : str;
   },
 
-  formSubmit (e) {
-    let values = e.detail.value;
-    console.log("to be submit:");
-    console.log(values);
-    values.gender = this.genderStr2Num(values.gender);
-    api.updateMyInfo({openid: this.data.openid, ...values}).then(() => {
-      this.onLoad();
-    })
-  },
-
-  onLoad() {
+  getMyInfo(loading) {
     if (wx.getUserProfile) {
       this.setData({
         canIUseGetUserProfile: true
-      })
+      });
     }
     const openid = wx.getStorageSync('openid');
     var that = this;
-    api.getMyInfo(openid).then(res => {
+    api.getMyInfo(openid, loading).then(res => {
       const user = res.data.user;
       console.log("load:");
       console.log(user);
@@ -79,13 +49,27 @@ Page({
         openid: this.validateStr(user.openid),
         username: this.validateStr(user.username),
         age: this.validateStr(user.age),
-        gender: this.genderNum2Str(Number(user.gender)),
+        gender: this.validateStr(user.gender),
         phone: this.validateStr(user.phone),
         wxId: this.validateStr(user.wxId),
         email: this.validateStr(user.email),
         personalInfo: this.validateStr(user.personalInfo)
       });
     });
+  },
+
+  formSubmit (e) {
+    let values = e.detail.value;
+    console.log("to be submit:");
+    console.log(values);
+    api.updateMyInfo({openid: this.data.openid, ...values}).then(() => {
+      Toast.success('更新成功');
+      this.getMyInfo(false);
+    })
+  },
+
+  onLoad() {
+    this.getMyInfo(true);
   },
   getUserProfile(e) {
     // 推荐使用wx.getUserProfile获取用户信息，开发者每次通过该接口获取用户个人信息均需用户确认，开发者妥善保管用户快速填写的头像昵称，避免重复弹窗

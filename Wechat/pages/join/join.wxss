@@ -5,3 +5,7 @@
     padding: 10px;
     border-radius: 10px;
 }
+
+.course-card {
+    background-color: white !important; /* 强行覆盖van-card的灰色背景 */
+}

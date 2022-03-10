@@ -8,9 +8,7 @@ const login = function () {
                 // 发送 res.code 到后台换取 openId, sessionKey, unionId            
                 console.log("login success, code:", res.code);
     
-                http.get("login", {
-                    'content-type': 'application/json'
-                }, {code: res.code})
+                http.post("login", {code: res.code})
                 .then(res => {
                     console.log(res);
                     //可以把openid和session保存到本地缓存，方便以后调用
@@ -30,18 +28,36 @@ const login = function () {
     })
 }
 
-const getMyInfo = function (openid) {
-    return http.get("user", {
-        'content-type': 'application/json'
-    }, {openid: openid})
+const getMyInfo = function (openid, loading) {
+    return http.get("user", {openid: openid}, loading);
 }
 
 const updateMyInfo = function (values) {
-    return http.post("user", values)
+    return http.post("user", values, false);
+}
+
+const getLessonAll = function () {
+    return http.get("getLessonAll", {});
+}
+
+const joinLesson = function(openid, lessonId) {
+    return http.post("joinLesson", {'openid': openid, 'lessonId': lessonId}, false);
+}
+
+const leaveLesson = function(openid, lessonId) {
+    return http.post("leaveLesson", {'openid': openid, 'lessonId': lessonId}, false);
+}
+
+const queryLessonsForUser = function(openid) {
+    return http.get("queryLessonsForUser", {'openid': openid}, false);
 }
 
 module.exports = {
     login: login,
     getMyInfo: getMyInfo,
-    updateMyInfo: updateMyInfo
+    updateMyInfo: updateMyInfo,
+    getLessonAll: getLessonAll,
+    joinLesson: joinLesson,
+    leaveLesson: leaveLesson,
+    queryLessonsForUser: queryLessonsForUser
 }

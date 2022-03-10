@@ -46,4 +46,5 @@
   <van-popup show="{{ showGenderPopup }}" position="bottom">
     <van-picker columns="{{ ['男', '女'] }}" bind:confirm="onGenderConfirm" bind:cancel="onGenderCancel" visible-item-count="3" show-toolbar />
   </van-popup>
+  <van-toast id="van-toast" />
 </view>

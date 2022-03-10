@@ -1,18 +1,23 @@
 <!--pages/join/join.wxml-->
 <view>
-    <input placeholder="请输入要搜索的课程名"></input>
+    <van-search value="{{ courseQuery }}" placeholder="请输入要搜索的课程名" />
 </view>
 <block wx:for="{{LessonItems}}" wx:for-index="LessonIdx" wx:for-item="Lesson">
-    <view class="card" data-lessonidx="{{LessonIdx}}" bindtap="onJoinLesson">
-        <view>课程名字：{{ Lesson.name }} ({{Lesson.title}}!)</view>
-        <view>报名人数：{{Lesson.residualNum}} / {{Lesson.totalNum}}</view>
-        <view>课程价格：{{ Lesson.price }}</view>
-        <view>课程介绍：{{ Lesson.desc }}</view>
-        <view>{{ Lesson.image }}</view>
+    <view style="margin-top: 17rpx; margin-bottom: 17rpx;" data-lessonidx="{{LessonIdx}}" bindtap="onTapLesson">
+        <van-cell-group inset border="false">
+                <van-card title="{{ Lesson.name }}" thumb="{{ Lesson.image }}" tag="{{Lesson.title}}"
+            price="{{ Lesson.price }}" desc="{{ Lesson.desc }}" custom-class="course-card">
+                    <view slot="num" style="text-align: right; color: #969799">
+                        <text>已报名: {{Lesson.residualNum}} / {{Lesson.totalNum}}</text>
+                    </view>
+            </van-card>
+            <van-toast id="van-toast" />
+        </van-cell-group>
     </view>
-    <modal hidden="{{hiddenmodalput}}" title="完善资料，立即报名" confirm-text="报名" cancel-text="再想想" bindcancel="cancelM" bindconfirm="confirmM">
+    <van-dialog hidden="{{hiddenmodalput}}" id="van-dialog" />
+    <!-- <modal hidden="{{hiddenmodalput}}" title="完善资料，立即报名" confirm-text="报名" cancel-text="再想想" bindcancel="cancelM" bindconfirm="confirmM">
       <view>报名课程名称：{{LessonItems[currentLessonIdx].name}}</view>
       <input bindinput='iName' type='text' placeholder="请输入姓名..." auto-focus/>
       <input bindinput='iPhoneNum' type='number' placeholder="请输入手机号码..." />
-    </modal>
+    </modal> -->
  </block>
