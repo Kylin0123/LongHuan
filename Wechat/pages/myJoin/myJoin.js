@@ -1,5 +1,6 @@
 // pages/myJoin/myJoin.js
-const http = require('../../utils/http.js');
+import api from '../../utils/api';
+import Toast from '../../miniprogram_npm/@vant/weapp/toast/toast';
 
 Page({
 
@@ -10,37 +11,39 @@ Page({
         lessonItems: []
     },
 
-    onLeaveLesson: function(e) {
-        var lessonIdx = e.currentTarget.dataset.lessonidx;
+    getMyLessons: function(loading) {
+        api.queryLessonsForUser(wx.getStorageSync('openid'), loading)
+            .then(res => {
+                console.log(res.data)
+                this.setData({
+                    lessonItems: res.data.lessons
+                })
+            });
+    },
+
+    onLeaveLesson: function (e) {
+        console.log(e);
+        var lessonId = e.currentTarget.dataset.lessonid;
         var that = this;
-        console.log(e.currentTarget.dataset)
-        http.get("leaveLesson", {
-            "Content-Type": "application/www-form-urlencoded"
-        }, {
-            openid: wx.getStorageSync('openid'),
-            lessonId: that.data.lessonItems[lessonIdx].id
-        }).then(res => {
-            wx.showToast({
-              title: '退课成功！'
+        api.leaveLesson(wx.getStorageSync('openid'), lessonId)
+            .then(res => {
+                console.log("退课成功");
+                Toast.success('退课成功');
+                that.getMyLessons(false);
             })
-            this.onLoad();
-        })
     },
 
     /**
      * 生命周期函数--监听页面加载
      */
     onLoad: function (options) {
-        http.get("queryLessonsForUser", {
-            "Content-Type": "application/www-form-urlencoded"
-        }, {
-            openid: wx.getStorageSync('openid')
-        }).then(res => {
-            console.log(res.data)
-            this.setData({
-                lessonItems: res.data.lessons
-            })
-        })
+        api.queryLessonsForUser(wx.getStorageSync('openid'), true)
+            .then(res => {
+                console.log(res.data)
+                this.setData({
+                    lessonItems: res.data.lessons
+                })
+            });
     },
 
     /**

@@ -1,8 +1,17 @@
 <!--pages/myJoin/myJoin.wxml-->
-<block>已经参加的课程：</block>
-<block wx:for="{{lessonItems}}" wx:for-index="lessonIdx" wx:for-item="lesson">
-    <view style="text-align: center" class="card">
-        <text>{{ lesson.name }} </text>
-        <button data-lessonidx="{{lessonIdx}}" bindtap="onLeaveLesson">退课</button>
-    </view>
- </block>
+<van-cell-group border="false">
+    <block wx:for="{{lessonItems}}" wx:for-index="lessonIdx" wx:for-item="lesson">
+        <van-cell center>
+            <van-row>
+                <van-col span="8" custom-class="my-lesson">
+                    <text style="color: black;">{{ lesson.name }}</text>
+                </van-col>
+                <van-col span="6" offset="9">
+                    <van-button type="danger" size="small" custom-style="margin:0"
+                    bind:click="onLeaveLesson" data-lessonid="{{lesson.id}}">退课</van-button>
+                </van-col>
+                <van-toast id="van-toast" />
+            </van-row>
+        </van-cell>
+    </block>
+</van-cell-group>

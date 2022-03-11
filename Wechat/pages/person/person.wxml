@@ -1,41 +1,50 @@
 <!--index.wxml-->
-<view class="userinfo">
-  <block wx:if="{{canIUseOpenData}}">
-    <view class="userinfo-avatar" bindtap="bindViewTap">
-      <open-data type="userAvatarUrl"></open-data>
-    </view>
-    <open-data type="userNickName"></open-data>
-  </block>
-  <block wx:elif="{{!hasUserInfo}}">
-    <button wx:if="{{canIUseGetUserProfile}}" bindtap="getUserProfile"> 获取头像昵称 </button>
-    <button wx:elif="{{canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
-    <view wx:else> 请使用1.4.4及以上版本基础库 </view>
-  </block>
-  <block wx:else>
-    <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
-    <text class="userinfo-nickname">{{userInfo.nickName}}</text>
-  </block>
-</view>
-<view style="white-space:pre-wrap">
-  <form bindsubmit="formSubmit" bindreset="formReset">
-    <text>openid:{{openid}}\n</text>
-    <text>姓名：{{username}}\n</text>
-    <input name="username" placeholder="请在这里输入修改" />
-    <text>年龄：{{age}}\n</text>
-    <input name="age" placeholder="请在这里输入修改" />
-    <text>性别：{{gender}}\n</text>
-    <input name="gender" placeholder="请在这里输入修改" />
-    <text>电话：{{phone}}\n</text>
-    <input name="phone" placeholder="请在这里输入修改" />
-    <text>微信号：{{wxId}}\n</text>
-    <input name="wxId" placeholder="请在这里输入修改" />
-    <text>邮箱：{{email}}\n</text>
-    <input name="email" placeholder="请在这里输入修改" />
-    <text>个人介绍：{{personalInfo}}\n</text>
-    <input name="personalInfo" placeholder="请在这里输入修改" />
+<view>
+  <view class="userinfo">
+    <block wx:if="{{canIUseOpenData}}">
+      <view class="userinfo-avatar" bindtap="bindViewTap">
+        <open-data type="userAvatarUrl"></open-data>
+      </view>
+      <open-data type="userNickName"></open-data>
+    </block>
+    <block wx:elif="{{!hasUserInfo}}">
+      <button wx:if="{{canIUseGetUserProfile}}" bindtap="getUserProfile"> 获取头像昵称 </button>
+      <button wx:elif="{{canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
+      <view wx:else> 请使用1.4.4及以上版本基础库 </view>
+    </block>
+    <block wx:else>
+      <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
+      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+    </block>
+  </view>
 
-    <button formType="submit">提交</button>
-    <button formType="reset">重置</button>
-
-  </form>
+  <view style="margin-top: 30rpx; padding-bottom: 50rpx;">
+    <form bindsubmit="formSubmit">
+      <van-cell-group inset border="false">
+        <van-field label="姓名" name="username" value="{{ username }}" placeholder="点击输入姓名" border="{{ true }}" />
+        <van-field label="年龄" name="age" value="{{ age }}" placeholder="点击输入年龄" border="{{ true }}" type="number" />
+        <van-field label="性别" name="gender" value="{{ gender }}" placeholder="点击选择性别" border="{{ true }}" bind:click-input="onGenderClick" readonly />
+        <van-field label="电话" name="phone" value="{{ phone }}" placeholder="点击输入电话" border="{{ true }}" type="number" />
+        <van-field label="微信号" name="wxId" value="{{ wxId }}" placeholder="点击输入微信号" border="{{ true }}" />
+        <van-field label="邮箱" name="email" value="{{ email }}" placeholder="点击输入邮箱" border="{{ true }}" />
+        <van-field label="个人介绍" name="personalInfo" value="{{ personalInfo }}" placeholder="点击输入个人介绍" border="{{ true }}" type="textarea" maxlength="50" show-word-limit autosize />
+      </van-cell-group>
+      <view style="margin-top: 20rpx">
+        <van-cell-group inset border="false">
+          <button formType="submit" type="primary">更新信息</button>
+        </van-cell-group>
+      </view>
+    </form>
+    <van-cell-group inset title="调试信息">
+      <van-collapse value="{{ debugActiveNames }}" bind:change="onDebugInfoChange" clickable>
+        <van-collapse-item title="openid" name="1">
+          <text class="font-break" user-select>{{openid}}</text>
+        </van-collapse-item>
+      </van-collapse>
+    </van-cell-group>
+  </view>
+  <van-popup show="{{ showGenderPopup }}" position="bottom">
+    <van-picker columns="{{ ['男', '女'] }}" bind:confirm="onGenderConfirm" bind:cancel="onGenderCancel" visible-item-count="3" show-toolbar />
+  </van-popup>
+  <van-toast id="van-toast" />
 </view>

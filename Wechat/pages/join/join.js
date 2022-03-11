@@ -1,5 +1,7 @@
 // pages/join/join.js
-const http = require('../../utils/http.js');
+import Dialog from '../../miniprogram_npm/@vant/weapp/dialog/dialog';
+import Toast from '../../miniprogram_npm/@vant/weapp/toast/toast';
+import api from '../../utils/api';
 
 Page({
 
@@ -10,62 +12,51 @@ Page({
         name: "",
         phoneNum: "",
         currentLessonIdx: null,
-        hiddenmodalput: true,  //隐藏Modal
-        LessonItems: []
+        hiddenmodalput: true, //隐藏Modal
+        LessonItems: [],
+        courseQuery: ""
     },
 
-    onJoinLesson: function (e) {
-        var lessonIdx = e.currentTarget.dataset.lessonidx;
-        this.setData({
-            currentLessonIdx: lessonIdx,
-            hiddenmodalput: false
-        })
+    options: {
+        multipleSlots: true // 在组件定义时的选项中启用多slot支持
     },
-    confirmM: function () {
-        console.log("姓名：" + this.data.name + "  电话：" + this.data.phoneNum);
-        var that = this;
-        http.get("joinLesson", {
-            "Content-Type": "application/www-form-urlencoded"
-        },{
-            openid: wx.getStorageSync('openid'),
-            lessonId: this.data.LessonItems[this.data.currentLessonIdx].id
-        }).then(res => {
-            console.log(":res")
-            that.setData({
-                hiddenmodalput: true
+
+    onTapLesson: function (e) {
+        if (getApp().globalData.login == false) {
+            Toast.fail("请登录后报名");
+            return;
+        }
+        Dialog.confirm({
+            title: '课程报名',
+            message: '确认报名: ' + this.data.LessonItems[e.currentTarget.dataset.lessonidx].name,
+        })
+            .then(() => {
+                // on confirm
+                api.joinLesson(
+                    wx.getStorageSync('openid'),
+                    this.data.LessonItems[e.currentTarget.dataset.lessonidx].id)
+                    .then(res => {
+                        Toast.success('报名成功');
+                    });
             })
-            wx.showToast({
-              title: '已成功报名！',
-            })
-        })
+            .catch(() => {
+                // on cancel
+            });
+
     },
-    cancelM: function () {
-        this.setData({
-            hiddenmodalput: true,
-        })
-    },
-    iName: function (e) {
-        this.setData({
-           name:e.detail.value
-        })
-     },
-     iPhoneNum: function (e) {
-        this.setData({
-           phoneNum: e.detail.value
-        })
-     },
 
     /**
      * 生命周期函数--监听页面加载
      */
     onLoad: function (options) {
         var that = this;
-        http.get("getLessonAll", {}, {})
-        .then(res => {
-            that.setData({
-                LessonItems: res.data.lessons
-            })
-        });
+        api.getLessonAll()
+            .then(res => {
+                that.setData({
+                    LessonItems: res.data.lessons
+                })
+            });
+        console.log(this.data.LessonItems);
     },
 
     /**

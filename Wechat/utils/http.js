@@ -3,6 +3,7 @@
  */
 
 const baseUrl = "https://longhuangroup.top/longhuan-api/v1/"; // 接口地址
+const FormData = require('../miniprogram_npm/@zlyboy/wx-formdata/index.js');
 
 /**
  * 封装请求
@@ -23,26 +24,20 @@ function fetch(options) {
         ...options.header
       },
       method: options.method,
-      success: function(res) {
+      success: function (res) {
         if (options.loading) {
           wx.hideLoading()
         }
         console.log(res);
-        if(res.statusCode != 200) {
+        if (res.statusCode != 200) {
           wx.showToast({
             title: '网络错误：' + res.errMsg,
           })
           return;
         }
-        if (res.data.status != 1) {
-          wx.showToast({
-            title: '数据错误：' + res.data.msg,
-          })
-          return;
-        }
         resolve(res.data); //把请求到的数据发到引用请求的地方
       },
-      fail: function(err) {
+      fail: function (err) {
         if (options.loading) {
           wx.hideLoading()
         }
@@ -60,10 +55,20 @@ function fetch(options) {
  */
 export function post(url, params, loading = true) {
   console.log(params, loading);
+  let formData = new FormData();
+  for (let k in params) {
+    formData.append(k, params[k]);
+  }
+  let data = formData.getData();
+  console.log(data);
+  console.log(data.contentType);
   var option = {
-    url: url,
-    data: params,
+    url,
+    data: data.buffer,
     method: 'POST',
+    header: {
+      'Content-Type': data.contentType
+    },
     loading
   }
   return fetch(option);
@@ -72,11 +77,13 @@ export function post(url, params, loading = true) {
 /**
  * GET请求
  */
-export function get(urls, header, params, loading = true) {
+export function get(url, params, loading = true) {
   console.log(params, loading);
   var option = {
-    url: urls,
-    header: header,
+    url,
+    header: {
+      "Content-Type": "application/www-form-urlencoded"
+    },
     data: params,
     method: 'GET',
     loading
