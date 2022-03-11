@@ -8,14 +8,9 @@ import com.longhuan.wechatapp.entity.Lesson;
 import com.longhuan.wechatapp.service.LessonService;
 import com.longhuan.wechatapp.service.UserJoinLessonService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
-import java.sql.Wrapper;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,7 +31,7 @@ public class LessonController {
         return new WechatResult(jsonObject);
     }
 
-    @RequestMapping(path = "/joinLesson", method = RequestMethod.POST)
+    @RequestMapping(path = "/joinLesson", method = RequestMethod.POST, consumes = "multipart/form-data")
     public WechatResult joinLesson(@RequestParam String openid, @RequestParam int lessonId) {
         UserJoinLesson userJoinLesson = new UserJoinLesson();
         userJoinLesson.setUserOpenid(openid);
@@ -65,7 +60,7 @@ public class LessonController {
         return result;
     }
 
-    @RequestMapping(path = "/leaveLesson", method = RequestMethod.POST)
+    @RequestMapping(path = "/leaveLesson", method = RequestMethod.POST, consumes = "multipart/form-data")
     public WechatResult leaveLesson(@RequestParam String openid, @RequestParam int lessonId) {
         Map<String, Object> params = new HashMap<>();
         params.put("user_openid", openid);

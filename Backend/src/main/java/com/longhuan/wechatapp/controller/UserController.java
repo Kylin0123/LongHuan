@@ -37,7 +37,7 @@ public class UserController {
     @Value("${wechat.secret}")
     public String secret;
 
-    @RequestMapping(path = "login", method = RequestMethod.GET)
+    @RequestMapping(path = "login", method = RequestMethod.POST, consumes = "multipart/form-data")
     public WechatResult login(@RequestParam String code) {
         try {
             String[] res = getOpenid(code);
@@ -119,8 +119,8 @@ public class UserController {
         return new WechatResult(jsonObject);
     }
 
-    @RequestMapping(path = "/user", method = RequestMethod.POST, consumes = "application/json")
-    public WechatResult addUser(@RequestBody User user) {
+    @RequestMapping(path = "/user", method = RequestMethod.POST, consumes = "multipart/form-data")
+    public WechatResult addUser(User user) {
         userService.saveOrUpdate(user);
         WechatResult result = new WechatResult(1, "用户信息更新成功！");
         return result;
